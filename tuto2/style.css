@@ -1,0 +1,37 @@
+.spacer {
+    margin-top: 20px;
+}
+
+.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover > th {
+  background-color: #428BCA;
+  color: #ffffff;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.hSpacer {
+	margin-left: 20px;
+}
+
+.colDe {
+	width: 20%;
+}
+
+.colA {
+	width: 15%;
+}
+
+.colObjet {
+	width: 45%;
+}
+
+.colDate {
+	width: 15%;
+}
+
+.surbrillanceRecherche {
+	background-color: #FFD42A;
+}
