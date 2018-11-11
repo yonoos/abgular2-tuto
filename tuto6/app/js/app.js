@@ -1,11 +1,40 @@
 angular.module("Webmail", [ "ngSanitize", "ui.tinymce", "MailServiceRest", "MesFiltres", "MesDirectives" ])
-.controller("WebmailCtrl", function($scope, $location, $filter, mailService) {
+.config(function($httpProvider){
+	$httpProvider.interceptors.push(function($q, $rootScope){
+
+		var nbReqs = 0;
+
+		return {
+			'request' : function(config){
+				console.log(config);
+				$rootScope.chargementEnCours = true;
+				nbReqs++;
+				return config;
+			},
+			'response' : function(response){
+				nbReqs--;
+				if(nbReqs == 0){
+					$rootScope.chargementEnCours = false;
+				}
+				return response;
+			},
+			'responseError' : function(rejection){
+				if (--nbReqs == 0) {
+					$rootScope.chargementEnCours = false;
+				}
+				return $q.reject(rejection);
+			}
+		};
+	});
+})
+.controller("WebmailCtrl", function($rootScope, $scope, $location, $filter, mailService) {
 	
 	
 	// tri
-
+	$rootScope.chargementEnCours = false;
 	$scope.champTri = null;
 	$scope.triDescendant = false;
+
 	$scope.triEmails = function(champ) {
 		if ($scope.champTri == champ) {
 			$scope.triDescendant = !$scope.triDescendant;
